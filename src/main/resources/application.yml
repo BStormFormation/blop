@@ -28,7 +28,9 @@ application:
     headerPrefix: "Bearer "
     secret: "Y2nr@Svs1#Rume@v9^r$$hwTm563QpxLfdDTO$VdLLMnNRJmcQ"
     headerKey: "Authorization"
-
+java:
+  runtime:
+    version: 18
 custom:
   property: "ma prop custom"
   other: "thing"
