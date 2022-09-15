@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -56,36 +57,39 @@ public class SecurityConfig/* extends WebSecurityConfigurerAdapter  (deprecié d
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter authFilter) throws Exception {
 
         http.csrf().disable();
+        http.cors();
 
         http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // A ecrire du plus spécifique au plus général
-        http.authorizeRequests()
+//        http.authorizeRequests()
                 // region demo security
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/security/test/all").permitAll()
-                .antMatchers("/security/test/nobody").denyAll()
-                .antMatchers("/security/test/connected").authenticated()
-                .antMatchers("/security/test/not-connected").anonymous()
-                .antMatchers("/security/test/role/user").hasRole("PERSONNEL")
-                .antMatchers("/security/test/role/admin").hasRole("ADMIN")
-                .antMatchers("/security/test/role/any").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/security/test/authority/READ").hasAuthority("ROLE_USER")
-                .antMatchers("/security/test/authority/any").not().hasAnyAuthority("ROLE_USER", "WRITE")
-                .antMatchers("/fake/request/{id::[0-9]+}/**").denyAll()
-                // je peux utiliser:
-                // - ? : joker pour de 0 à 1 caractère
-                // - * : joker pour un segment de 0 à N caractères
-                // - **: joker pour de 0 à N segments
-                // - {pathVar:regex}: pattern regex pour un segment
-                // endregion
-                .antMatchers("/reserv/check").permitAll()
-                .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-                .antMatchers("/user/**").permitAll()
-                .anyRequest().permitAll()
-                .and().headers().frameOptions().disable();
+//                .antMatchers("/swagger-ui/**").permitAll()
+//                .antMatchers("/h2-console/**").permitAll()
+//                .antMatchers("/security/test/all").permitAll()
+//                .antMatchers("/security/test/nobody").denyAll()
+//                .antMatchers("/security/test/connected").authenticated()
+//                .antMatchers("/security/test/not-connected").anonymous()
+//                .antMatchers("/security/test/role/user").hasRole("PERSONNEL")
+//                .antMatchers("/security/test/role/admin").hasRole("ADMIN")
+//                .antMatchers("/security/test/role/any").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/security/test/authority/READ").hasAuthority("ROLE_USER")
+//                .antMatchers("/security/test/authority/any").not().hasAnyAuthority("ROLE_USER", "WRITE")
+//                .antMatchers("/fake/request/{id::[0-9]+}/**").denyAll()
+//                // je peux utiliser:
+//                // - ? : joker pour de 0 à 1 caractère
+//                // - * : joker pour un segment de 0 à N caractères
+//                // - **: joker pour de 0 à N segments
+//                // - {pathVar:regex}: pattern regex pour un segment
+//                // endregion
+//                .antMatchers("/reserv/check").permitAll()
+//                .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+//                .antMatchers("/user/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and().headers().frameOptions().disable();
+
+        http.authorizeHttpRequests().anyRequest().permitAll();
 
         return http.build();
 

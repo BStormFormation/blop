@@ -15,7 +15,9 @@ spring:
   h2:
     console:
       enabled: true
-
+  config:
+    activate:
+      on-profile: dev
   jpa:
     show-sql: true
     hibernate:
@@ -36,3 +38,8 @@ custom:
     - 1
     - 2
     - 3
+---
+spring:
+  config:
+    activate:
+      on-profile: prod

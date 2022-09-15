@@ -4,12 +4,15 @@ import be.bstorm.akimts.rest.bxl.model.dto.TuteurDTO;
 import be.bstorm.akimts.rest.bxl.model.forms.TuteurForm;
 import be.bstorm.akimts.rest.bxl.service.TuteurService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/tuteur")
+@CrossOrigin(origins = {"http://localhost:4200"})
+@Secured({"ROLE_PERSONNEL"})
 public class TuteurController {
 
     private final TuteurService service;
@@ -36,6 +39,7 @@ public class TuteurController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @Secured({"ROLE_ADMIN"})
     public TuteurDTO delete(@PathVariable long id) {
         return service.delete(id);
     }
