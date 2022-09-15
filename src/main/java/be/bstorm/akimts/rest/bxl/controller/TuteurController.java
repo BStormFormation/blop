@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/tuteur")
 @CrossOrigin(origins = {"http://localhost:4200"})
-@Secured({"ROLE_PERSONNEL"})
 public class TuteurController {
 
     private final TuteurService service;
